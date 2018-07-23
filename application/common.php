@@ -386,85 +386,16 @@ if (!function_exists('getBrowseType')) {
 }
 
 if (!function_exists('curl_get_https')) {
-    function curl_get_https($url, $message = null, $type = 'GET', $arrHeaders=[]){
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            if(stristr($url, "https")){
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-            }else{
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-            }
-
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-
-            $type = strtoupper($type);
-            if($message){
-                $message = http_build_query($message);
-            }
-            switch ($type){
-
-                case "POST":
-                    curl_setopt($ch, CURLOPT_POST,true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS,$message);
-                    break;
-                case "PUT" :
-                    curl_setopt ($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-                    curl_setopt($ch, CURLOPT_POSTFIELDS,$message);
-                    break;
-                case "DELETE":
-                    curl_setopt ($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-                    curl_setopt($ch, CURLOPT_POSTFIELDS,$message);
-                    break;
-                default :
-                    curl_setopt($ch, CURLOPT_HTTPGET, true);
-                    break;
-            }
-
-
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 23);
-            curl_setopt($ch, CURLINFO_HEADER_OUT,1);//启用时追踪句柄的请求字符串。
-//        $headers = [
-//            "Content-Type: application/json;charset=UTF-8",
-//            "Access-Control-Allow-Credentials: true",
-//            "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie, Authorization ,token",
-//            "Access-Control-Allow-Methods: POST,GET,PUT,DELETE,OPTIONS",
-//            "Access-Control-Allow-Origin: *",
-//        ];
-//        $headers = [
-//            "Content-Type: application/x-www-form-urlencoded",
-//            "Accept: application/json",
-//        ];
-//        $arrHeaders = array_merge($headers,$arrHeaders);
-
-            if(!empty($arrHeaders)){
-                curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeaders);
-            } //设置header
-            $res =  curl_exec($ch);
-
-//        $headers = curl_getinfo($ch, CURLINFO_HEADER_OUT);
-//        echo "\n\n=====请求返回=====\n";
-//        echo "out headers：\t".$headers ."\n";
-//        $hearLen = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-//        echo "header len：\t".$hearLen ."\n";
-//        $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//        echo "httpcode:\t".$statuscode."\n";
-//        echo "\n===================\n";
-
-
-            $errorno = curl_errno($ch);
-            $info  = curl_getinfo( $ch);
-            //print_r($info);
-
-
-            if ($errorno) {
-                $re = array('code'=> 0, 'errorno' => $errorno, 'errmsg' => $info);
-                return json_encode($re);
-            }
-            curl_close($ch);
-            return $res;
+    function curl_get_https($url){
+        $curl = curl_init(); // 启动一个CURL会话
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);  // 从证书中检查SSL加密算法是否存在
+        $tmpInfo = curl_exec($curl);     //返回api的json对象
+        //关闭URL请求
+        curl_close($curl);
+        return $tmpInfo;    //返回json对象
     }
 }
