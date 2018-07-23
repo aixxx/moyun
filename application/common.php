@@ -387,8 +387,6 @@ if (!function_exists('getBrowseType')) {
 
 if (!function_exists('curl_get_https')) {
     function curl_get_https($url){
-        function curl_post($url, $message = null, $type = 'GET', $arrHeaders=[])
-        {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
 
@@ -468,6 +466,5 @@ if (!function_exists('curl_get_https')) {
             }
             curl_close($ch);
             return $res;
-        }
     }
 }
