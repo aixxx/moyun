@@ -44,15 +44,12 @@ class Index extends Frontend
         $url .= "?token=".$token;
         $url .= "&appkey=".Env::get('oauth.AppKey');
         $url .= "&appsecret=".Env::get('oauth.AppSecret');
-        echo $url;
-        $res = curl_get_https($url);
-        //$res = json_decode($res, true);
-        echo "<br/>";
-        print_r($res);
 
-        echo "<br/> aaa";
+        $res = curl_get_https($url);
+        $res = json_decode($res, true);
+        print_r($res);die;
         if($res["code"] != 1) $this->error($res["desc"], "/");
-        
+
         $resule = $res["resule"];
         if(!$resule) $this->error("数据错误", "/");
 
