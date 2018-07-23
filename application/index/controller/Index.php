@@ -47,7 +47,7 @@ class Index extends Frontend
         echo $url;
         $res = curl_get_https($url);
         //$res = json_decode($res, true);
-        print_r(json_decode($res, true));die;
+        print_r($res);die;
         if($res["code"] != 1) $this->error($res["desc"], "/");
         
         $resule = $res["resule"];
