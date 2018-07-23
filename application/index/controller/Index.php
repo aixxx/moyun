@@ -45,8 +45,9 @@ class Index extends Frontend
         $url .= "&appkey=".Env::get('oauth.AppKey');
         $url .= "&appsecret=".Env::get('oauth.AppSecret');
         //echo $url;die;
-        $res = $this->http($url);
+        $res = curl_get_https($url);
         $res = json_decode($res, true);
+        print_r($res);die;
         if($res["code"] != 1) $this->error($res["desc"], "/");
         
         $resule = $res["resule"];
@@ -69,12 +70,7 @@ class Index extends Frontend
             $is_save = $oauth->isUpdate(false)->save($data);
             session("MOBOO_OAUTH_ID", $oauth->getLastInsID());
         }
-        
-        print_r($res);die;
-        $res = 3;
-        //记录seesion
-        session("MOBOO_OAUTH_ID", $res);
         //记录成功，跳转活动首页
-        $this->redirect('http://thinkphp.cn/blog/2',302);
+        $this->redirect('/',302);
     }
 }
