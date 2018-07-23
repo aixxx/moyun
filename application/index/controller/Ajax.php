@@ -4,6 +4,7 @@ namespace app\index\controller;
 
 use app\common\controller\Frontend;
 use think\Lang;
+use think\Request;
 
 /**
  * Ajax异步请求接口
@@ -12,22 +13,25 @@ use think\Lang;
 class Ajax extends Frontend
 {
 
-    protected $noNeedLogin = ['lang'];
+    protected $noNeedLogin = ['*'];
     protected $noNeedRight = ['*'];
-    protected $layout = '';
 
     /**
-     * 加载语言包
+    获取列表数据
      */
-    public function lang()
-    {
-        header('Content-Type: application/javascript');
-        $callback = $this->request->get('callback');
-        $controllername = input("controllername");
-        $this->loadlang($controllername);
-        //强制输出JSON Object
-        $result = 'define(' . json_encode(Lang::get(), JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE) . ');';
-        return $result;
+    public function getList(){
+        $sort = Request::instance()->param("sort","vote");
+        $order = Request::instance()->param("order","desc");
+
+        $product = $this->getAdminModel("Product");
+        //->distinct('location3')->field('`location3` code,`cn_city` name')->where(['location2' => $location2, 'location3' => ['neq', '00']])->select();
+        $list = $product->alias("a")
+            ->distinct('a.oauth_id')
+            ->field('a.image, a.id, a.oauth_id, b.vote')
+            ->join("oauth b","a.oauth_id = b.id","left")
+            ->where(["a.status"=> "1"])
+            ->select();
+        print_r($product->getLastSql());die;
     }
     
     /**
@@ -37,5 +41,6 @@ class Ajax extends Frontend
     {
         return action('api/common/upload');
     }
+
 
 }

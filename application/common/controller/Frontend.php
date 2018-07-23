@@ -7,6 +7,7 @@ use think\Config;
 use think\Controller;
 use think\Hook;
 use think\Lang;
+use think\Loader;
 
 /**
  * 前台控制器基类
@@ -134,4 +135,11 @@ class Frontend extends Controller
         $this->view->config = array_merge($this->view->config ? $this->view->config : [], is_array($name) ? $name : [$name => $value]);
     }
 
+
+    /**
+     *   自定义加载model。 app/admin/model/ 下
+     **/
+    protected function getAdminModel($model){
+        return Loader::model($model, "model", "", "admin");
+    }
 }

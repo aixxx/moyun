@@ -26,8 +26,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
-                        {field: 'oauthid', title: __('Oauthid')},
-                        {field: 'oauthpid', title: __('Oauthpid')},
+                        {field: 'oauth_id', title: __('Oauthid')},
+                        {field: 'oauth_pid', title: __('Oauthpid')},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime}
                     ]
                 ]

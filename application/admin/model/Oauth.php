@@ -15,7 +15,7 @@ class Oauth extends Model
     // 定义时间戳字段名
     protected $createTime = 'createtime';
     protected $updateTime = 'updatetime';
-    
+
     // 追加属性
     protected $append = [
         'platform_text'

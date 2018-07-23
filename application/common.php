@@ -300,3 +300,103 @@ if (!function_exists('var_export_short')) {
     }
 
 }
+
+if (!function_exists('getExcel')) {
+    function getExcel($fileName, $headArrs, $datas, $sheet_title = ['SHEET1'])
+    {
+        //对数据进行检验
+        //print_r($datas);die;
+        if (empty($datas) || !is_array($datas)) {
+            die("data must be a array");
+        }
+        //检查文件名
+        if (empty($fileName)) {
+            exit;
+        }
+
+        $date = date("Y_m_d", time());
+        $fileName .= "_{$date}.xlsx";
+        //设置缓存方式
+        $cacheMethod = \PHPExcel_CachedObjectStorageFactory::cache_in_memory_gzip;
+        $cacheSettings = array();
+        \PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
+
+        //创建PHPExcel对象，注意，不能少了\
+        $objPHPExcel = new \PHPExcel();
+        $objProps = $objPHPExcel->getProperties();
+        foreach ($headArrs as $head_k => $headArr) {
+            $head_k_title = $sheet_title[$head_k];
+            if ($head_k == 0) {
+                $objPHPExcel->getActiveSheet()->setTitle($head_k_title);
+            } else {
+                /* $msgWorkSheet = new \PHPExcel_Worksheet($objPHPExcel, $head_k_title);
+                  $objPHPExcel->addSheet($msgWorkSheet); */
+                $objPHPExcel->createSheet();
+                $objPHPExcel->setActiveSheetIndex($head_k);
+                $objPHPExcel->getActiveSheet()->setTitle($head_k_title);
+            }
+            //设置表头
+            //设置表头
+            foreach ($headArr as $k => $v) {
+                $colum2 = \PHPExcel_Cell::stringFromColumnIndex($k);
+                $objPHPExcel->setActiveSheetIndex($head_k)->setCellValue($colum2 . '1', $v);
+            }
+            //die();
+            $column = 2;
+            $objActSheet = $objPHPExcel->getActiveSheet();
+            foreach ($datas[$head_k] as $key => $rows) { //行写入
+                $span = 0;
+                foreach ($rows as $keyName => $value) {// 列写入
+                    $j = \PHPExcel_Cell::stringFromColumnIndex($span);
+                    $objActSheet->setCellValue($j . $column, $value);
+                    //print_r($j.$column.'-');
+                    $span++;
+                }
+                $column++;
+            }
+        }
+        //die;
+        $fileName = iconv("utf-8", "gb2312", $fileName);
+        //print_r($objActSheet);die;
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=\"{$fileName}\"");
+        header('Cache-Control: max-age=0');
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        //print_r($fileName);die;
+        $objWriter->save('php://output'); //文件通过浏览器下载
+        exit;
+    }
+}
+
+if (!function_exists('getBrowseType')) {
+    function getBrowseType()
+    {
+        $judge = $_SERVER['HTTP_USER_AGENT'];
+        if (strpos($judge, "MicroMessenger") !== false) {
+            return "weixin";
+        } elseif (strpos($judge, "Weibo") !== false) {
+            return "weibo";
+        } elseif (strpos($judge, "QQ") !== false) {
+            return "qq";
+        } else {
+            return false;
+        }
+    }
+}
+
+if (!function_exists('curl_get_https')) {
+    function curl_get_https($url){
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 500);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_URL, $url);
+
+        $res = curl_exec($curl);
+        curl_close($curl);
+
+        return $res;
+    }
+}
