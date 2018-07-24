@@ -67,7 +67,7 @@ class Index extends Frontend
             $isUpload = action("Api/getIsUpload");
         }else{
             $is_save = $oauth->isUpdate(false)->save($data);
-            session("MOBOO_OAUTH_ID", $oauth->getLastInsID());
+            session("MOBOO_OAUTH_ID", $oauth->id);
             $isUpload = 1;
         }
         //记录成功，跳转活动首页
