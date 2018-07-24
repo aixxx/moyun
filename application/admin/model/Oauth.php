@@ -45,6 +45,12 @@ class Oauth extends Model
     }
 
 
+    public function product(){
+        return $this->hasOne("Product", 'oauth_id', 'id')->where(["status"=>"1"])->order("oauth_id desc, id desc")->bind("image");
+    }
 
+    public function productMany(){
+        return $this->hasMany("Product", 'oauth_id', 'id')->where(["status"=>"1"])->order("id asc");
+    }
 
 }

@@ -3,17 +3,11 @@
 namespace app\index\controller;
 
 use app\common\controller\Frontend;
-use app\common\library\Token;
 use think\Env;
 use think\Request;
 
 class Index extends Frontend
 {
-
-    protected $noNeedLogin = '*';
-    protected $noNeedRight = '*';
-    protected $layout = '';
-
     public function _initialize()
     {
         parent::_initialize();
@@ -25,8 +19,12 @@ class Index extends Frontend
      */
     public function index()
     {
-        //https://devauth.gomoboo.com/sso/auth?appkey=xxx&successurl=https%3A%2F%2Fwww.b aidu.com%2
-
+        //session存在，跳转活动首页
+        if(session("MOBOO_OAUTH_ID")) {
+            $isUpload = action("Api/getIsUpload");
+            $params = ['id'=> session("MOBOO_OAUTH_ID"),'is_upload'=> $isUpload];
+            $this->redirect($this->activityHome ."?". http_build_query($params),302);
+        }
         $oauthUrl = Env::get('oauth.oauthUrl') . "/sso/auth";
         $oauthUrl .= "?appkey=".Env::get('oauth.AppKey');
         $oauthUrl .= "&successurl=".urlencode(Env::get('oauth.successurl'));
@@ -38,7 +36,7 @@ class Index extends Frontend
      * */
     public function callback(){
         $token = Request::instance()->param("token","");
-        if(!$token) $this->error("token错误", "/");
+        if(!$token) jsond(0, 'token not found');
         //https://devauth.gomoboo.com/sso/validate?token=498381557-83362202-af93-48d1-ab6eaa19b6c95c44&appkey=xxx&appsecret=xyz
         $url = Env::get('oauth.oauthUrl') . "/sso/validate";
         $url .= "?token=".$token;
@@ -47,30 +45,33 @@ class Index extends Frontend
 
         $res = curl_get_https($url);
         $res = json_decode($res, true);
-        print_r($res);die;
-        if($res["code"] != 1) $this->error($res["desc"], "/");
+        if($res["code"] != 1) jsond(0, $res["desc"]);
 
-        $resule = $res["resule"];
-        if(!$resule) $this->error("数据错误", "/");
+        $result = $res["result"];
+        if(!$result) jsond(0, 'data not found');
 
         $oauth = $this->getAdminModel("Oauth");
-        $info = $oauth->where(['userNo'=> $resule["userNo"]])->find();
+        $info = $oauth->where(['openid'=> $result["userNo"]])->find();
 
         $data = [
-            'openid' => $info["userNo"],
-            'header_img_url' => $info["userNo"],
-            'name' => $info["nickname"],
-            'gender' => $info["gender"],
-            'profileDesc' => $info["profileDesc"],
+            'openid' => $result["userNo"],
+            'header_img_url' => $result["headIconUrl"],
+            'name' => $result["nickname"],
+            'gender' => $result["gender"],
+            'profile_desc' => $result["profileDesc"],
+            'platform' => getBrowseType() ?: 'weixin',
         ];
         if($info){
             $is_save = $oauth->isUpdate(true)->save($data, ["id"=> $info["id"]]);
             session("MOBOO_OAUTH_ID", $info["id"]);
+            $isUpload = action("Api/getIsUpload");
         }else{
             $is_save = $oauth->isUpdate(false)->save($data);
             session("MOBOO_OAUTH_ID", $oauth->getLastInsID());
+            $isUpload = 1;
         }
         //记录成功，跳转活动首页
-        $this->redirect('/',302);
+        $params = ['id'=> session("MOBOO_OAUTH_ID"),'is_upload'=> $isUpload];
+        $this->redirect($this->activityHome ."?". http_build_query($params),302);
     }
 }

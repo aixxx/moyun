@@ -380,7 +380,7 @@ if (!function_exists('getBrowseType')) {
         } elseif (strpos($judge, "QQ") !== false) {
             return "qq";
         } else {
-            return false;
+            return '';
         }
     }
 }
@@ -398,5 +398,16 @@ if (!function_exists('curl_get_https')) {
         curl_close($curl);
         //var_dump($res);die("a");
         return $res;
+    }
+}
+
+/**
+ *   自定义返回
+ */
+if (!function_exists('jsond')) {
+    function jsond($code = 0, $msg = '', $data = [])
+    {
+        echo json_encode(['code' => $code, 'msg' => $msg, 'data' => $data]);
+        exit;
     }
 }
