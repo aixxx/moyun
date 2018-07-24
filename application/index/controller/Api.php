@@ -25,7 +25,7 @@ class Api extends Frontend
      */
     public function getList(){
         $request = Request::instance();
-        $order = $request->param("order",2,"intval");
+        $order = $request->param("order",1,"intval");
         $paginateArr = [
             "page" => $request->param('page',1,'intval'),
             "list_rows" => $request->param('pageSize',10,'intval'),
