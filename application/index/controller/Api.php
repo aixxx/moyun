@@ -36,6 +36,9 @@ class Api extends Frontend
         }elseif ($order == 2){
             $list = $this->getListOrderVote($paginateArr);
         }
+        foreach($list as $k=>$v){
+            $list[$k]['image'] = "/moboo_admin/public".$v['image'];
+        }
 
         jsond(200,'',$list);
 
