@@ -32,15 +32,15 @@ class Api extends Frontend
         ];
         //默认排序：最新
         if($order == 1){
-            $list = $this->getListOrderId($paginateArr);
+            $data = $this->getListOrderId($paginateArr);
         }elseif ($order == 2){
-            $list = $this->getListOrderVote($paginateArr);
+            $data = $this->getListOrderVote($paginateArr);
         }
-        foreach($list as $k=>$v){
-            $list[$k]['image'] = "/moboo_admin/public".$v['image'];
+        foreach($data['list'] as $k=>$v){
+            $data['list'][$k]['image'] = "/moboo_admin/public".$v['image'];
         }
 
-        jsond(200,'',$list);
+        jsond(200,'',$data);
 
     }
 
@@ -61,8 +61,8 @@ class Api extends Frontend
             $oauth_ids[] = $v["oauth_id"];
         }
         $data = [
-            'currentPage' => $product_array['currentPage'],
-            'lastPage' => $product_array['lastPage'],
+            'currentPage' => $product_array['current_page'],
+            'lastPage' => $product_array['last_page'],
             'total' => $product_array['total'],
         ];
         $data["list"] = $oauth
@@ -89,13 +89,19 @@ class Api extends Frontend
         foreach ($product_array['data'] as $k=>$v){
             $oauth_ids[] = $v["oauth_id"];
         }
-        $list = $oauth
+		
+        $data = [
+            'currentPage' => $product_array['current_page'],
+            'lastPage' => $product_array['last_page'],
+            'total' => $product_array['total'],
+        ];
+        $data["list"] = $oauth
             ->with("product")
             ->field('id, vote, platform')
             ->where(['id'=>['in',implode(",",$oauth_ids)]])
             ->order("id desc")
             ->select();
-        return $list;
+        return $data;
     }
 
     /**
