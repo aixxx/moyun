@@ -67,6 +67,8 @@ class Api extends Frontend
             ->where(['id'=>['in',implode(",",$oauth_ids)]])
             ->order("vote desc,id desc")
             ->select();
+            print_r([$product, $list]);die;
+
         return $list;
     }
 
