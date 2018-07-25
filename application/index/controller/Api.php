@@ -60,16 +60,19 @@ class Api extends Frontend
         foreach ($product_array['data'] as $k=>$v){
             $oauth_ids[] = $v["oauth_id"];
         }
-
-        $list = $oauth
+        $data = [
+            'currentPage' => $product_array['currentPage'],
+            'lastPage' => $product_array['lastPage'],
+            'total' => $product_array['total'],
+        ];
+        $data["list"] = $oauth
             ->with("product")
             ->field('id, vote, platform')
             ->where(['id'=>['in',implode(",",$oauth_ids)]])
             ->order("vote desc,id desc")
             ->select();
-            print_r([$product, $list]);die;
 
-        return $list;
+        return $data;
     }
 
     protected function getListOrderId($paginateArr){
