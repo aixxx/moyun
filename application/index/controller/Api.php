@@ -128,9 +128,9 @@ class Api extends Frontend
 
         $list = $oauth
             ->with("productMany")
-            ->field("id,vote,platform")
+            ->field("id,vote,platform,name")
             ->find($id);
-        
+        $list = $list->toArray();
         $list['rank'] = $oauth->where(['vote'=>['>',$list['vote']]])->count();
         foreach($list["product_many"] as $k=>$v){
             $list["product_many"][$k]['image'] = "/moboo_admin/public".$v['image'];
