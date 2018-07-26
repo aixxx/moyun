@@ -130,6 +130,11 @@ class Api extends Frontend
             ->with("productMany")
             ->field("id,vote,platform")
             ->find($id);
+        
+        $list['rank'] = $oauth->where(['vote'=>['>',$list['vote']]])->count();
+        foreach($list["product_many"] as $k=>$v){
+            $list["product_many"][$k]['image'] = "/moboo_admin/public".$v['image'];
+        }
         if(!$list) jsond(0,'data error');
         if(!$list->product_many) jsond(0,'data error for pruduct');
         jsond(200,'',$list);
@@ -270,7 +275,7 @@ class Api extends Frontend
                 $attachment = model("attachment");
                 $attachment->data(array_filter($params));
                 $attachment->save();
-                jsond(200, '', ['img_url'=> $savekey]);
+                jsond(200, '', ['img_url'=> "/moboo_admin/public".$savekey]);
             }else{
                 jsond(0, '图片上传失败');
             }
