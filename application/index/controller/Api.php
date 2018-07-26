@@ -91,9 +91,9 @@ class Api extends Frontend
         }
 		
         $total = Db::table("fa_product")
-            ->distinct(true)
             ->field("oauth_id")
             ->where(["status"=>"1"])
+            ->group("oauth_id")
             ->count();
     print_r($total);die;
         $data = [
