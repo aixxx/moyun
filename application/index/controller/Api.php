@@ -90,6 +90,12 @@ class Api extends Frontend
             $oauth_ids[] = $v["oauth_id"];
         }
 		
+        $total = Db::table("fa_product")
+            ->distinct(true)
+            ->field("oauth_id")
+            ->where(["status"=>"1"])
+            ->count();
+    print_r($total);die;
         $data = [
             'currentPage' => $product_array['current_page'],
             'lastPage' => $product_array['last_page'],
