@@ -1,8 +1,8 @@
 <?php
-/*if (empty($_SERVER['PATH_INFO'])){
+if (empty($_SERVER['PATH_INFO'])){
     //Nginx 获取不到信息可用这个办法
     $_SERVER['PATH_INFO'] = $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REQUEST_URI"];
-}*/
+}
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
@@ -25,7 +25,7 @@ require __DIR__ . '/../thinkphp/base.php';
 \think\Route::bind('admin');
 
 // 关闭路由
-\think\App::route(true);
+\think\App::route(false);
 
 // 设置根url
 \think\Url::root('');
