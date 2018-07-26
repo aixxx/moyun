@@ -28,7 +28,7 @@ class Api extends Frontend
         $order = $request->param("order",1,"intval");
         $paginateArr = [
             "page" => $request->param('page',1,'intval'),
-            "list_rows" => $request->param('pageSize',1,'intval'),
+            "list_rows" => $request->param('pageSize',2,'intval'),
         ];
         //默认排序：最新
         if($order == 1){
@@ -60,11 +60,18 @@ class Api extends Frontend
         foreach ($product_array['data'] as $k=>$v){
             $oauth_ids[] = $v["oauth_id"];
         }
+        $total = Db::table("fa_product")
+            ->field("oauth_id")
+            ->where(["status"=>"1"])
+            ->group("oauth_id")
+            ->count();
+        
         $data = [
-            'currentPage' => $product_array['current_page'],
-            'lastPage' => $product_array['last_page'],
-            'total' => $product_array['total'],
+            'currentPage' => $paginateArr['page'],
+            'lastPage' => ceil($total / $paginateArr['list_rows']),
+            'total' => $total,
         ];
+        
         $data["list"] = $oauth
             ->with("product")
             ->field('id, vote, platform')
@@ -95,11 +102,11 @@ class Api extends Frontend
             ->where(["status"=>"1"])
             ->group("oauth_id")
             ->count();
-    print_r($total);die;
+        
         $data = [
-            'currentPage' => $product_array['current_page'],
-            'lastPage' => $product_array['last_page'],
-            'total' => $product_array['total'],
+            'currentPage' => $paginateArr['page'],
+            'lastPage' => ceil($total / $paginateArr['list_rows']),
+            'total' => $total,
         ];
         $data["list"] = $oauth
             ->with("product")
