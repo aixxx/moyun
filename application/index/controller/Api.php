@@ -28,7 +28,7 @@ class Api extends Frontend
         $order = $request->param("order",1,"intval");
         $paginateArr = [
             "page" => $request->param('page',1,'intval'),
-            "list_rows" => $request->param('pageSize',10,'intval'),
+            "list_rows" => $request->param('pageSize',1,'intval'),
         ];
         //默认排序：最新
         if($order == 1){
