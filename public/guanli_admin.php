@@ -1,8 +1,9 @@
 <?php
 if (empty($_SERVER['PATH_INFO'])){
     //Nginx 获取不到信息可用这个办法
-    //$_SERVER['PATH_INFO'] = $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REQUEST_URI"];
+    $_SERVER['PATH_INFO'] = $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REQUEST_URI"];
 }
+echo $_SERVER['PATH_INFO'];
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
