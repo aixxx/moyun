@@ -123,6 +123,7 @@ return [
     'No rows were updated'                                  => '未更新任何行',
     'Parameter %s can not be empty'                         => '参数%s不能为空',
     'Are you sure you want to delete the %s selected item?' => '确定删除选中的 %s 项?',
+    'Are you sure you want to action the %s selected item?' => '确定操作选中的 %s 项?',
     'Are you sure you want to delete this item?'            => '确定删除此项?',
     'Are you sure you want to delete or turncate?'          => '确定删除或清空?',
     'You have no permission'                                => '你没有权限访问',

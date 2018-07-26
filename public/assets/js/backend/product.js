@@ -83,7 +83,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 var that = this;
                 var ids = Table.api.selectedids(table);
                 Layer.confirm(
-                    __('Are you sure you want to delete the %s selected item?', ids.length),
+                    __('Are you sure you want to action the %s selected item?', ids.length),
                     {icon: 3, title: __('Warning'), shadeClose: true},
                     function (index) {
                         Table.api.multi("", ids, table, that);
