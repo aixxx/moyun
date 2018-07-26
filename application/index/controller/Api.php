@@ -134,7 +134,7 @@ class Api extends Frontend
         if(!$list) jsond(0,'data error');
         if(!$list->product_many) jsond(0,'data error for pruduct');
         
-        //$list['rank'] = $oauth->where(['vote'=>['>',$list['vote']]])->count();
+        $list['rank'] = $oauth->where(['vote'=>['>',$list['vote']]])->count();
         foreach($list->product_many as $k=>$v){
             $v->image = "/moboo_admin/public".$v->image;
         }
