@@ -172,6 +172,7 @@ class Api extends Frontend
      **/
     public function addUpload(){
         $imgs = Request::instance()->param("data");
+        print_r($imgs);die;
         /*$imgs = [
             '/uploads/20180718/d408db57f0008965f96878790907d53e.png',
             '/uploads/20180718/d408db57f0008965f96878790907d53e.png',
