@@ -28,7 +28,7 @@ class Api extends Frontend
         $order = $request->param("order",1,"intval");
         $paginateArr = [
             "page" => $request->param('page',1,'intval'),
-            "list_rows" => $request->param('pageSize',1,'intval'),
+            "list_rows" => $request->param('pageSize',10,'intval'),
         ];
         //默认排序：最新
         if($order == 1){
@@ -171,8 +171,7 @@ class Api extends Frontend
     *   记录上传数据
      **/
     public function addUpload(){
-        $imgs = Request::instance()->param("data");
-        print_r($imgs);die;
+        $imgs = Request::instance()->param("data/a");
         /*$imgs = [
             '/uploads/20180718/d408db57f0008965f96878790907d53e.png',
             '/uploads/20180718/d408db57f0008965f96878790907d53e.png',
