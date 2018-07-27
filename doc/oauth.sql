@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `fa_oauth` (
   `gender` tinyint(1) NOT NULL DEFAULT '0' COMMENT '性别:2=男,1=女',
   `profile_desc` varchar(255) NOT NULL DEFAULT '' COMMENT '用户简介',
   `vote` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '投票数',
-  `platform` enum('weibo','weixin','qq') NOT NULL DEFAULT 'weixin' COMMENT '平台:weibo=微博,weixin=微信,qq=QQ',
+  `platform` enum('weibo','weixin','qq','mobu') NOT NULL DEFAULT 'weixin' COMMENT '平台:weibo=微博,weixin=微信,qq=QQ,mobu=mobu',
   `createtime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `weigh` int(10) NOT NULL DEFAULT '0' COMMENT '权重',

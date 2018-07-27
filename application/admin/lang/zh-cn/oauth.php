@@ -10,6 +10,7 @@ return [
     'Platform weibo'  =>  '微博',
     'Platform weixin'  =>  '微信',
     'Platform qq'  =>  'QQ',
+    'Platform mobu'  =>  'mobu',
     'Createtime'  =>  '创建时间',
     'Updatetime'  =>  '更新时间',
     'Weigh'  =>  '权重'

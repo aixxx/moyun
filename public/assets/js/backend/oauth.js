@@ -25,11 +25,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id')},
+                        {field: 'id', title: __('Id'), sortable: true},
                         {field: 'name', title: __('Name'), operate: 'LIKE %...%', placeholder: '模糊搜索，*表示任意字符'},
-                        {field: 'vote', title: __('Vote'), operate: 'BETWEEN'},
+                        {field: 'vote', title: __('Vote'), operate: 'BETWEEN', sortable: true},
                         {field: 'platform', title: __('Platform'), visible:false, searchList: {"weibo":__('platform weibo'),"weixin":__('platform weixin'),"qq":__('platform qq')}},
-                        {field: 'platform_text', title: __('Platform'), operate:false, custom:{"微博": 'success', "微信": 'info', "QQ": 'danger'}, formatter: Table.api.formatter.flag},
+                        {field: 'platform_text', title: __('Platform'), operate:false, custom:{"微博": 'success', "微信": 'info', "QQ": 'danger','mobu':'warning'}, formatter: Table.api.formatter.flag},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime}
                     ]
                 ]

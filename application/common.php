@@ -379,6 +379,8 @@ if (!function_exists('getBrowseType')) {
             return "weibo";
         } elseif (strpos($judge, "QQ") !== false) {
             return "qq";
+        } elseif (strpos($judge, "Mobu/V1.2.2 ") !== false) {
+            return "mobu";
         } else {
             return '';
         }

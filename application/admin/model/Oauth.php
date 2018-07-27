@@ -33,7 +33,7 @@ class Oauth extends Model
     
     public function getPlatformList()
     {
-        return ['weibo' => __('Platform weibo'),'weixin' => __('Platform weixin'),'qq' => __('Platform qq')];
+        return ['weibo' => __('Platform weibo'),'weixin' => __('Platform weixin'),'qq' => __('Platform qq'),'mobu' => __('Platform mobu')];
     }     
 
 

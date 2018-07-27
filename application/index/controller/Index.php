@@ -61,7 +61,7 @@ class Index extends Frontend
             'name' => $result["nickname"],
             'gender' => $result["gender"],
             'profile_desc' => $result["profileDesc"],
-            'platform' => getBrowseType() ?: 'weixin',
+            'platform' => getBrowseType() ?: 'mobu',
         ];
         if($info){
             $is_save = $oauth->isUpdate(true)->save($data, ["id"=> $info["id"]]);
