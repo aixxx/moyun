@@ -45,6 +45,7 @@ class Index extends Frontend
         $url .= "&appkey=".Env::get('oauth.AppKey');
         $url .= "&appsecret=".Env::get('oauth.AppSecret');
         $res = curl_get_https($url);
+        print_r($res);die;
         $res = json_decode($res, true);
         if($res["code"] != 1) jsond(0, $res["desc"]);
 
