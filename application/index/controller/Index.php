@@ -45,13 +45,10 @@ class Index extends Frontend
         $url .= "&appkey=".Env::get('oauth.AppKey');
         $url .= "&appsecret=".Env::get('oauth.AppSecret');
         $res = curl_get_https($url);
-        print_r($res);
         $res = json_decode($res, true);
-        print_r($res);
         if($res["code"] != 1) jsond(0, $res["desc"]);
 
         $result = $res["result"];
-        print_r($result);
         if(!$result) jsond(0, 'data not found');
 
         $oauth = $this->getAdminModel("Oauth");
