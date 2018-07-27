@@ -38,7 +38,6 @@ class Index extends Frontend
     public function callback(){
         $token = Request::instance()->param("token","");
         $getbyid = Request::instance()->param("getbyid",0,"intval");
-        print_r($token);die;
         if(!$token) jsond(0, 'token not found');
         //https://devauth.gomoboo.com/sso/validate?token=498381557-83362202-af93-48d1-ab6eaa19b6c95c44&appkey=xxx&appsecret=xyz
         $url = Env::get('oauth.oauthUrl') . "/sso/validate";
