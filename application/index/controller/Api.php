@@ -206,7 +206,7 @@ class Api extends Frontend
         foreach ($imgs as $k=>$v) {
             $data[$k] = [
                 'oauth_id' => session("MOBOO_OAUTH_ID"),
-                'image' => $v,
+                'image' => str_replace(Config::get("upload.imgurl"),"", $v),
                 'status' => 0,
             ];
         }
