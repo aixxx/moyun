@@ -45,11 +45,13 @@ class Index extends Frontend
         $url .= "&appkey=".Env::get('oauth.AppKey');
         $url .= "&appsecret=".Env::get('oauth.AppSecret');
         $res = curl_get_https($url);
-        //print_r($res);die;
+        print_r($res);
         $res = json_decode($res, true);
+        print_r($res);
         if($res["code"] != 1) jsond(0, $res["desc"]);
 
         $result = $res["result"];
+        print_r($result);
         if(!$result) jsond(0, 'data not found');
 
         $oauth = $this->getAdminModel("Oauth");
@@ -63,6 +65,7 @@ class Index extends Frontend
             'profile_desc' => $result["profileDesc"],
             'platform' => getBrowseType() ?: 'mobu',
         ];
+        print_r($data);die;
         if($info){
             $is_save = $oauth->isUpdate(true)->save($data, ["id"=> $info["id"]]);
             session("MOBOO_OAUTH_ID", $info["id"]);
