@@ -6,6 +6,7 @@ use app\common\controller\Frontend;
 use fast\Random;
 use think\Config;
 use Think\Db;
+use think\Image;
 use think\Request;
 
 class Api extends Frontend
@@ -37,7 +38,7 @@ class Api extends Frontend
             $data = $this->getListOrderVote($paginateArr);
         }
         foreach($data['list'] as $k=>$v){
-            $data['list'][$k]['image'] = "/moboo_admin/public".$v['image'];
+            $data['list'][$k]['image'] = Config::get("upload.imgurl").$v['image'];
         }
 
         jsond(200,'',$data);
@@ -136,7 +137,7 @@ class Api extends Frontend
         
         $list['rank'] = $oauth->where(['vote'=>['>',$list['vote']]])->count() + 1;
         foreach($list->product_many as $k=>$v){
-            $v->image = "/moboo_admin/public".$v->image;
+            $v->image = Config::get("upload.imgurl").$v->image;
         }
         
         jsond(200,'',$list);
@@ -277,7 +278,12 @@ class Api extends Frontend
                 $attachment = model("attachment");
                 $attachment->data(array_filter($params));
                 $attachment->save();
-                jsond(200, '', ['img_url'=> "/moboo_admin/public".$savekey]);
+
+                //生成缩略图
+                $image = Image::open(ROOT_PATH . '/public'.$savekey);
+                $thumb = str_replace(".".$suffix,"_".Config::get("upload.width")."w.".$suffix, $savekey);
+                $image->thumb(Config::get("upload.width"), 10000)->save(ROOT_PATH . '/public'.$thumb);
+                jsond(200, '', ['img_url'=> Config::get("upload.imgurl").$thumb]);
             }else{
                 jsond(0, '图片上传失败');
             }

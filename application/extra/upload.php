@@ -26,4 +26,7 @@ return [
      * 是否支持批量上传
      */
     'multiple'  => false,
+
+    'imgurl' => '/moboo_admin/public',
+    'width' => '530',
 ];
