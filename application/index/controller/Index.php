@@ -67,15 +67,18 @@ class Index extends Frontend
             'profile_desc' => $result["profileDesc"],
             'platform' => getBrowseType() ?: 'mobu',
         ];
-        print_r($data);
         if($info){
+            $data['updatetime'] = time();
             $is_save = $oauth->isUpdate(true)->save($data, ["id"=> $info["id"]]);
             session("MOBOO_OAUTH_ID", $info["id"]);
             $isUpload = action("Api/getIsUpload");
         }else{
-            $is_save = $oauth->isUpdate(false)->save($data) or die(mysql_error());
-            print_r($oauth->getLastSql());die;
-            session("MOBOO_OAUTH_ID", $oauth->id);
+            //$is_save = $oauth->isUpdate(false)->save($data) or die(mysql_error());
+            $data['createtime'] = $data['updatetime'] = time();
+            $is_save = $oauth->insert($data) or die(mysql_error());
+            print_r($oauth->getLastSql());
+            print_r($oauth->getLastInsID());die;
+            session("MOBOO_OAUTH_ID", $oauth->getLastInsID());
             $isUpload = 1;
         }
         //记录成功，跳转活动首页
