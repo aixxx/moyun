@@ -168,12 +168,12 @@ class Api extends Frontend
         $max = $votelog->whereTime('createtime', 'today')
             ->where(['oauth_id'=> $uid])
             ->count();
-        if($max >= 6) jsond(0, '您今天投票机会已经用完');
+        //if($max >= 6) jsond(0, '您今天投票机会已经用完');
         //每天每人最多两票
         $p_vote = $votelog->whereTime('createtime', 'today')
             ->where(['oauth_id'=> $uid, 'oauth_pid'=> $id])
             ->count();
-        if($p_vote >= 2) jsond(0, '每天最多给同一作品投两票');
+        //if($p_vote >= 2) jsond(0, '每天最多给同一作品投两票');
 
         $data = [
             'oauth_id'=> $uid,
