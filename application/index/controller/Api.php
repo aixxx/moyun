@@ -296,6 +296,16 @@ class Api extends Frontend
     /**
     *   是否有上传资格
      */
+    public function isUpload(){
+        $isUpload = $this->getIsUpload();
+        if($isUpload) jsond(1,'可以上传');
+        $uid = session("MOBOO_OAUTH_ID");
+        $isUpload = $this->getAdminModel("Product")->where(['oauth_id'=>$uid, 'status' => "1"])->find();
+        if($isUpload) jsond(2,'已经有审核通过的作品');
+        $isUpload = $this->getAdminModel("Product")->where(['oauth_id'=>$uid, 'status' => "0"])->find();
+        if($isUpload) jsond(3,'作品正在审核');
+    }
+    
     public function getIsUpload(){
         if(!session("MOBOO_OAUTH_ID")) jsond(0, 'login time out');
 
