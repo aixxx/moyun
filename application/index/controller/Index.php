@@ -59,7 +59,8 @@ class Index extends Frontend
         $data = [
             'openid' => $result["userNo"],
             'header_img_url' => $result["headIconUrl"],
-            'name' => base64_encode($result["nickname"]),
+            //'name' => base64_encode($result["nickname"]),
+            'name' => $result["nickname"],
             'gender' => $result["gender"],
             'profile_desc' => $result["profileDesc"],
             'platform' => getBrowseType() ?: 'mobu',
