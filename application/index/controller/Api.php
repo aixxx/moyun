@@ -133,7 +133,7 @@ class Api extends Frontend
             ->find($id);
         
         if(!$list) jsond(0,'data error');
-        if(!$list->product_many) jsond(0,'data error for pruduct');
+        //if(!$list->product_many) jsond(0,'data error for pruduct');
         
         $list['rank'] = $oauth->where(['vote'=>['>',$list['vote']]])->count() + 1;
         foreach($list->product_many as $k=>$v){
