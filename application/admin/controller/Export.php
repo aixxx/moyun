@@ -37,9 +37,9 @@ class Export extends Backend
         $data[1] = $this->getProductCount($datetime);
         $data[2] = $this->getVoteCount($datetime);
 
-        $headarr[0] = ["日期/平台","微博","微信","QQ"];
-        $headarr[1] = ["日期/平台","微博","微信","QQ"];
-        $headarr[2] = ["日期/平台","微博","微信","QQ"];
+        $headarr[0] = ["日期/平台","微博","微信","QQ","MOBU"];
+        $headarr[1] = ["日期/平台","微博","微信","QQ","MOBU"];
+        $headarr[2] = ["日期/平台","微博","微信","QQ","MOBU"];
 
         $sheet_title = ["授权","投稿","投票"];
         $filename = "moboo-";
@@ -56,12 +56,14 @@ class Export extends Backend
             $weibo = $oauth->alias("a")->where($where. " and platform = 'weibo'")->count();
             $weixin = $oauth->alias("a")->where($where. " and platform = 'weixin'")->count();
             $qq = $oauth->alias("a")->where($where. " and platform = 'qq'")->count();
+            $mobu = $oauth->alias("a")->where($where. " and platform = 'mobu'")->count();
 
             $data[$k] = [
                 'day' => $v,
                 'weibo' => $weibo ?: 0,
                 'weixin' => $weixin ?: 0,
                 'qq' => $qq ?: 0,
+                'mobu' => $mobu ?: 0,
             ];
         }
         return $data;
@@ -87,12 +89,17 @@ class Export extends Backend
                 ->join("oauth b","a.oauth_id = b.id","left")
                 ->where($where. " and a.status = '1' and b.platform = 'qq'")
                 ->count();
+            $mobu = $product->alias("a")
+                ->join("oauth b","a.oauth_id = b.id","left")
+                ->where($where. " and a.status = '1' and b.platform = 'mobu'")
+                ->count();
 
             $data[$k] = [
                 'day' => $v,
                 'weibo' => $weibo ?: 0,
                 'weixin' => $weixin ?: 0,
                 'qq' => $qq ?: 0,
+                'mobu' => $mobu ?: 0,
             ];
         }
         return $data;
@@ -117,12 +124,17 @@ class Export extends Backend
                 ->join("oauth b","a.oauth_id = b.id","left")
                 ->where($where. " and platform = 'qq'")
                 ->count();
+            $qq = $votelog->alias("a")
+                ->join("oauth b","a.oauth_id = b.id","left")
+                ->where($where. " and platform = 'mobu'")
+                ->count();
 
             $data[$k] = [
                 'day' => $v,
                 'weibo' => $weibo ?: 0,
                 'weixin' => $weixin ?: 0,
                 'qq' => $qq ?: 0,
+                'mobu' => $mobu ?: 0,
             ];
         }
         return $data;

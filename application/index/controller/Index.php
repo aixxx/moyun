@@ -21,13 +21,13 @@ class Index extends Frontend
     {
         $getbyid = Request::instance()->param("getbyid",0,"intval");
         //session存在，跳转活动首页
-        /*
+        
         if(session("MOBOO_OAUTH_ID")) {
             $isUpload = action("Api/getIsUpload");
             $params = ['id'=> session("MOBOO_OAUTH_ID"),'is_upload'=> $isUpload,'getbyid'=> $getbyid];
             $this->redirect($this->activityHome ."?". http_build_query($params),302);
         }
-         * */
+        
         $oauthUrl = Env::get('oauth.oauthUrl') . "/sso/auth";
         $oauthUrl .= "?appkey=".Env::get('oauth.AppKey');
         $oauthUrl .= "&successurl=".urlencode(Env::get('oauth.successurl')."?getbyid=".$getbyid);
@@ -67,18 +67,14 @@ class Index extends Frontend
             'profile_desc' => $result["profileDesc"],
             'platform' => getBrowseType() ?: 'mobu',
         ];
+        print_r($data);
         if($info){
-            $data['updatetime'] = time();
             $is_save = $oauth->isUpdate(true)->save($data, ["id"=> $info["id"]]);
             session("MOBOO_OAUTH_ID", $info["id"]);
             $isUpload = action("Api/getIsUpload");
         }else{
-            //$is_save = $oauth->isUpdate(false)->save($data) or die(mysql_error());
-            $data['createtime'] = $data['updatetime'] = time();
-            $is_save = $oauth->insert($data) or die(mysql_error());
-            print_r($oauth->getLastSql());
-            print_r($oauth->getLastInsID());die;
-            session("MOBOO_OAUTH_ID", $oauth->getLastInsID());
+            $is_save = $oauth->isUpdate(false)->save($data);
+            session("MOBOO_OAUTH_ID", $oauth->id);
             $isUpload = 1;
         }
         //记录成功，跳转活动首页
