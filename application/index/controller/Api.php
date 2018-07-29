@@ -316,4 +316,13 @@ class Api extends Frontend
         $isUpload = $this->getAdminModel("Product")->where($map)->find();
         return $isUpload ? 0 : 1;
     }
+    
+    
+    public function getShare(){
+        $url = "https://devauth.gomoboo.com/3rd/weixin/config";
+        $url .= "?url=".  urlencode("http://devh5.gomoboo.com/moboo_admin/public/");
+        $res = curl_get_https($url);
+        $res = json_decode($res, true);
+        jsond(200,'',$res['result']);
+    }
 }
