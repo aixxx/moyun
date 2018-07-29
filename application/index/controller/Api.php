@@ -322,8 +322,7 @@ class Api extends Frontend
         $url = "https://devauth.gomoboo.com/3rd/weixin/config";
         $url .= "?url=".  urlencode("http://devh5.gomoboo.com/moboo_admin/public/");
         $res = curl_get_https($url);
-        echo $res->result;
-        die;
-        //$res = json_decode($res, true);
+        $res = json_decode($res, true);
+        echo json_encode($res['result']);
     }
 }
