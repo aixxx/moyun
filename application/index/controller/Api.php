@@ -320,7 +320,7 @@ class Api extends Frontend
     
     public function getShare(){
         $url = "https://devauth.gomoboo.com/3rd/weixin/config";
-        $url .= "?url=".  urlencode("http://devh5.gomoboo.com/act/index.html");
+        $url .= "?url=".  urlencode("http://devh5.gomoboo.com/act/index.html?id=14&is_upload=0&getbyid=0");
         $res = curl_get_https($url);
         $res = json_decode($res, true);
         echo json_encode($res['result']);
