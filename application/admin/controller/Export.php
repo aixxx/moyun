@@ -23,9 +23,9 @@ class Export extends Backend
     public function download(){
         $params = $this->request->param();
         //print_r($params);die;
-        $lottoTime = isset($params['lottoTime']) ?: date("Y-m-d");
+        $lottoTime = isset($params['lottoTime']) ? $params['lottoTime'] : date("Y-m-d");
         $lottoTime .= " 00:00:00";
-        $lottoTime2 = isset($params['lottoTime2']) ?: date("Y-m-d")." 23:59:59";
+        $lottoTime2 = isset($params['lottoTime2']) ? $params['lottoTime2'] : date("Y-m-d");
         $lottoTime2 .= " 23:59:59";
 
         //计算天数
@@ -34,7 +34,6 @@ class Export extends Backend
             $datetime[] = date("Y-m-d",$i);
             $i += 86400;
         }
-
         $data[0] = $this->getOauthCount($datetime);
         $data[1] = $this->getProductCount($datetime);
         $data[2] = $this->getVoteCount($datetime);
