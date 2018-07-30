@@ -315,7 +315,7 @@ if (!function_exists('getExcel')) {
         }
 
         $date = date("Y_m_d", time());
-        $fileName .= "_{$date}.xlsx";
+        $fileName .= "_{$date}.xls";
         //设置缓存方式
         $cacheMethod = \PHPExcel_CachedObjectStorageFactory::cache_in_memory_gzip;
         $cacheSettings = array();
@@ -362,7 +362,7 @@ if (!function_exists('getExcel')) {
         header("Content-Disposition: attachment;filename=\"{$fileName}\"");
         header('Cache-Control: max-age=0');
 
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         //print_r($fileName);die;
         $objWriter->save('php://output'); //文件通过浏览器下载
         exit;
