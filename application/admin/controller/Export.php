@@ -124,7 +124,7 @@ class Export extends Backend
                 ->join("oauth b","a.oauth_id = b.id","left")
                 ->where($where. " and platform = 'qq'")
                 ->count();
-            $qq = $votelog->alias("a")
+            $mobu = $votelog->alias("a")
                 ->join("oauth b","a.oauth_id = b.id","left")
                 ->where($where. " and platform = 'mobu'")
                 ->count();
