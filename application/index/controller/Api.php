@@ -324,7 +324,7 @@ class Api extends Frontend
     
     
     public function getShare(){
-        $url = "https://devauth.gomoboo.com/3rd/weixin/config";
+        $url = Env::get("oauthUrl")."/3rd/weixin/config";
         $url .= "?url=".  urlencode($_SERVER['HTTP_REFERER']);
         $res = curl_get_https($url);
         $res = json_decode($res, true);
