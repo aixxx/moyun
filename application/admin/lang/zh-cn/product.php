@@ -10,5 +10,6 @@ return [
     'Status 2'  =>  '未通过',
     'Status 1'  =>  '已通过',
     'Createtime'  =>  '创建时间',
-    'Updatetime'  =>  '更新时间'
+    'Updatetime'  =>  '更新时间',
+    'Oauth_text' => '昵称',
 ];
