@@ -67,7 +67,7 @@ class Index extends Frontend
             'profile_desc' => $result["profileDesc"],
             'platform' => getBrowseType() ?: 'mobu',
         ];
-        print_r($data);
+        //print_r($data);
         if($info){
             $is_save = $oauth->isUpdate(true)->save($data, ["id"=> $info["id"]]);
             session("MOBOO_OAUTH_ID", $info["id"]);

@@ -6,6 +6,7 @@ use app\common\controller\Frontend;
 use fast\Random;
 use think\Config;
 use Think\Db;
+use think\Env;
 use think\Image;
 use think\Request;
 
@@ -29,7 +30,7 @@ class Api extends Frontend
         $order = $request->param("order",1,"intval");
         $paginateArr = [
             "page" => $request->param('page',1,'intval'),
-            "list_rows" => $request->param('pageSize',2,'intval'),
+            "list_rows" => $request->param('pageSize',10,'intval'),
         ];
         //默认排序：最新
         if($order == 1){
@@ -147,6 +148,8 @@ class Api extends Frontend
     *   投票
      */
     public function vote(){
+        if(date("Y-m-d") >= Env::get("over_time")) jsond(0, '活动结束');
+
         $uid = session("MOBOO_OAUTH_ID");
         if(!$uid) jsond(0, 'login time out');
 
@@ -168,12 +171,12 @@ class Api extends Frontend
         $max = $votelog->whereTime('createtime', 'today')
             ->where(['oauth_id'=> $uid])
             ->count();
-        //if($max >= 6) jsond(0, '您今天投票机会已经用完');
+        if($max >= 6) jsond(0, '您今天投票机会已经用完');
         //每天每人最多两票
         $p_vote = $votelog->whereTime('createtime', 'today')
             ->where(['oauth_id'=> $uid, 'oauth_pid'=> $id])
             ->count();
-        //if($p_vote >= 2) jsond(0, '每天最多给同一作品投两票');
+        if($p_vote >= 2) jsond(0, '每天最多给同一作品投两票');
 
         $data = [
             'oauth_id'=> $uid,
@@ -223,6 +226,7 @@ class Api extends Frontend
     *   图片上传
      **/
     public function upload(){
+        if(date("Y-m-d") >= Env::get("over_time")) jsond(0, '活动结束');
         //$base64 = Config::get("base64.content");
         $base64 = Request::instance()->param("data","");
         if(!$base64) jsond(0, 'params empty');
@@ -297,6 +301,7 @@ class Api extends Frontend
     *   是否有上传资格
      */
     public function isUpload(){
+        if(date("Y-m-d") >= Env::get("over_time")) jsond(0, '活动结束');
         $isUpload = $this->getIsUpload();
         if($isUpload) jsond(1,'可以上传');
         $uid = session("MOBOO_OAUTH_ID");
@@ -324,5 +329,6 @@ class Api extends Frontend
         $res = curl_get_https($url);
         $res = json_decode($res, true);
         echo json_encode($res['result']);
+        die;
     }
 }
