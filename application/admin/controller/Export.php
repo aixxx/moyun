@@ -23,8 +23,10 @@ class Export extends Backend
     public function download(){
         $params = $this->request->param();
         //print_r($params);die;
-        $lottoTime = isset($params['lottoTime']) ?: date("Y-m-d")." 00:00:00";
+        $lottoTime = isset($params['lottoTime']) ?: date("Y-m-d");
+        $lottoTime .= " 00:00:00";
         $lottoTime2 = isset($params['lottoTime2']) ?: date("Y-m-d")." 23:59:59";
+        $lottoTime2 .= " 23:59:59";
 
         //计算天数
         $i=strtotime(substr($lottoTime, 0, 10));
