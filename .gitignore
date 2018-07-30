@@ -2,3 +2,4 @@ runtime
 .env
 .env.sample
 /nbproject/private/
+get_apidem.php
