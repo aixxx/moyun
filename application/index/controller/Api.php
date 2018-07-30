@@ -327,8 +327,9 @@ class Api extends Frontend
         $url = Env::get("oauthUrl")."/3rd/weixin/config";
         $url .= "?url=".  urlencode($_SERVER['HTTP_REFERER']);
         echo $_SERVER['HTTP_REFERER']."<br />";
+        echo $url."<br />";
         $res = curl_get_https($url);
-        echo $res;die;
+        print_r($res);die;
         $res = json_decode($res, true);
         echo json_encode($res['result']);
         die;
