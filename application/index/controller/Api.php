@@ -148,7 +148,7 @@ class Api extends Frontend
     *   投票
      */
     public function vote(){
-        if(date("Y-m-d") >= Env::get("over_time")) jsond(0, '活动结束');
+        if(date("Y-m-d") >= Env::get("oauth.over_time")) jsond(0, '活动结束');
 
         $uid = session("MOBOO_OAUTH_ID");
         if(!$uid) jsond(0, 'login time out');
@@ -226,7 +226,7 @@ class Api extends Frontend
     *   图片上传
      **/
     public function upload(){
-        if(date("Y-m-d") >= Env::get("over_time")) jsond(0, '活动结束');
+        if(date("Y-m-d") >= Env::get("oauth.over_time")) jsond(0, '活动结束');
         //$base64 = Config::get("base64.content");
         $base64 = Request::instance()->param("data","");
         if(!$base64) jsond(0, 'params empty');
@@ -301,7 +301,7 @@ class Api extends Frontend
     *   是否有上传资格
      */
     public function isUpload(){
-        if(date("Y-m-d") >= Env::get("over_time")) jsond(0, '活动结束');
+        if(date("Y-m-d") >= Env::get("oauth.over_time")) jsond(0, '活动结束');
         $isUpload = $this->getIsUpload();
         if($isUpload) jsond(1,'可以上传');
         $uid = session("MOBOO_OAUTH_ID");
