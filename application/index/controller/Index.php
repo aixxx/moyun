@@ -20,12 +20,14 @@ class Index extends Frontend
     public function index()
     {
         $getbyid = Request::instance()->param("getbyid",0,"intval");
+        $act = Request::instance()->param("act","20180719dhy");
+        session("MOBOO_ACT", $act);
         //session存在，跳转活动首页
         
         if(session("MOBOO_OAUTH_ID")) {
             $isUpload = action("Api/getIsUpload");
             $params = ['id'=> session("MOBOO_OAUTH_ID"),'is_upload'=> $isUpload,'getbyid'=> $getbyid];
-            $this->redirect($this->activityHome ."?". http_build_query($params),302);
+            $this->redirect("/act/".session("MOBOO_ACT")."/?". http_build_query($params),302);
         }
         
         $oauthUrl = Env::get('oauth.oauthUrl') . "/sso/auth";
@@ -79,6 +81,6 @@ class Index extends Frontend
         }
         //记录成功，跳转活动首页
         $params = ['id'=> session("MOBOO_OAUTH_ID"),'is_upload'=> $isUpload, 'getbyid'=> $getbyid];
-        $this->redirect($this->activityHome ."?". http_build_query($params),302);
+        $this->redirect("/act/".session("MOBOO_ACT")."/?". http_build_query($params),302);
     }
 }
