@@ -18,7 +18,7 @@ class Frontend extends Controller
     public function _initialize()
     {
         $this->browseType = getBrowseType();
-        //if(!$this->browseType) $this->error("目前只支持微博，微信，QQ里打开");
+        if(!$this->browseType) $this->error("目前只支持微博，微信，QQ，魔部APP 里打开，敬请谅解!");
         $this->activityHome = Env::get('oauth.activityHome');
     }
 
