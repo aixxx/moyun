@@ -53,7 +53,7 @@ class Min extends Command
         $publicPath = ROOT_PATH . 'public' . DS;
         $tempFile = $minPath . 'temp.js';
 
-        $nodeExec = '';
+        $nodeExec = 'node';
 
         if (!$nodeExec)
         {
