@@ -12,7 +12,7 @@ return array (
     'backend' => 'zh-cn',
     'frontend' => 'zh-cn',
   ),
-  'fixedpage' => 'product',
+  'fixedpage' => 'general/profile',
   'categorytype' => 
   array (
     'default' => 'Default',
