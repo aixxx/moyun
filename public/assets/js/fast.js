@@ -114,6 +114,7 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
             },
             //打开一个弹出窗口
             open: function (url, title, options) {
+                console.log(options);
                 title = title ? title : "";
                 url = Fast.api.fixurl(url);
                 url = url + (url.indexOf("?") > -1 ? "&" : "?") + "dialog=1";
@@ -121,6 +122,7 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
                         typeof options.width !== 'undefined' ? options.width : $(window).width() > 800 ? '800px' : '95%',
                         typeof options.height !== 'undefined' ? options.height : $(window).height() > 600 ? '600px' : '95%'
                     ];
+                console.log(area);
                 options = $.extend({
                     type: 2,
                     title: title,
