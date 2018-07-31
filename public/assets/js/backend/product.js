@@ -112,5 +112,5 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
 function return_image(value, row, index) {
     value = value ? value : '/assets/img/blank.gif';
-    return '<a href="' + Fast.api.cdnurl(value) + '"  class="dialogit" data-width="600px" title="'+ row.oauth_text +'"><img class="img-sm img-center" src="' + Fast.api.cdnurl(value) + '" /></a>';
+    return '<a href="' + Fast.api.cdnurl(value) + '"  class="dialogit" data-width="530px" title="'+ row.oauth_text +'"><img class="img-sm img-center" src="' + Fast.api.cdnurl(value) + '" /></a>';
 }
