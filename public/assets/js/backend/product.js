@@ -28,7 +28,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'id', title: __('Id')},
                         {field: 'oauth_id', title: __('Oauth_id'), visible:false},
                         {field: 'oauth_text', title: __('Oauth_text'), operate:false},
-                        {field: 'image', title: __('Image'), operate:false, formatter: Table.api.formatter.image},
+                        {field: 'image', title: __('Image'), operate:false, formatter: return_image},
                         {field: 'status', title: __('Status'), visible:false, searchList: {"0":__('Status 0'),"1":__('Status 1'),"2":__('Status 2')}},
                         {field: 'status_text', title: __('Status'), operate:false, custom:{"已通过": 'success', "审核中": 'info', "未通过": 'danger'}, formatter: Table.api.formatter.flag},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', formatter: Table.api.formatter.datetime},
@@ -109,3 +109,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
     };
     return Controller;
 });
+
+function return_image(value, row, index) {
+    value = value ? value : '/assets/img/blank.gif';
+    return '<a href="' + value + '"  class="dialogit" data-width="600px" title="'+ row.oauth_text +'"><img class="img-sm img-center" src="' + value + '" /></a>';
+}

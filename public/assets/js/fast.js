@@ -117,7 +117,10 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
                 title = title ? title : "";
                 url = Fast.api.fixurl(url);
                 url = url + (url.indexOf("?") > -1 ? "&" : "?") + "dialog=1";
-                var area = [$(window).width() > 800 ? '800px' : '95%', $(window).height() > 600 ? '600px' : '95%'];
+                var area = [
+                        typeof options.width !== 'undefined' ? options.width : $(window).width() > 800 ? '800px' : '95%',
+                        typeof options.height !== 'undefined' ? options.height : $(window).height() > 600 ? '600px' : '95%'
+                    ];
                 options = $.extend({
                     type: 2,
                     title: title,
