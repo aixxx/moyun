@@ -114,7 +114,6 @@ class Api extends Frontend
             ->with("product")
             ->field('id, vote, platform')
             ->where(['id'=>['in',implode(",",$oauth_ids)]])
-            ->order("id desc")
             ->select();
         return $data;
     }
