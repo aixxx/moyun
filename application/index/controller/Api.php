@@ -90,7 +90,7 @@ class Api extends Frontend
             ->distinct(true)
             ->field("oauth_id")
             ->where(["status"=>"1"])
-            ->order("oauth_id desc")
+            ->order("createtime desc")
             ->paginate($paginateArr['list_rows'], false, $paginateArr);
 
         $product_array = $product->toArray();
