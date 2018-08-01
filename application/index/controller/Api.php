@@ -112,9 +112,9 @@ class Api extends Frontend
         ];
         $data["list"] = $oauth
             ->with("product")
-            ->field('id, vote, platform')
             ->where(['id'=>['in',implode(",",$oauth_ids)]])
-            ->select();
+            ->column('id, vote, platform');
+            //->select();
         return $data;
     }
 
