@@ -110,11 +110,19 @@ class Api extends Frontend
             'lastPage' => ceil($total / $paginateArr['list_rows']),
             'total' => $total,
         ];
-        $data["list"] = $oauth
+        $list = $oauth
             ->with("product")
+            ->field('id, vote, platform')
             ->where(['id'=>['in',implode(",",$oauth_ids)]])
-            ->column('id, vote, platform');
-            //->select();
+            ->select();
+
+        foreach ($oauth_ids as $k1 => $v1){
+            foreach ($list as $k=>$v){
+                if($v["oauth_id"] == $v1){
+                    $data["list"][$k1] = $v;
+                }
+            }
+        }
         return $data;
     }
 
