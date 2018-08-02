@@ -141,7 +141,7 @@ class Api extends Frontend
         $list = $oauth
             ->with("productMany")
             ->field("id,vote,platform,name")
-            ->find($id);
+            ->find($id + $this->sqlnum);
         
         if(!$list) jsond(0,'data error');
         //if(!$list->product_many) jsond(0,'data error for pruduct');
@@ -149,7 +149,7 @@ class Api extends Frontend
         $list['rank'] = $oauth->where(['vote'=>['>',$list['vote']]])->count() + 1;
         foreach($list->product_many as $k=>$v){
             $v->image = Config::get("upload.imgurl").$v->image;
-            $v->id = $v->id + $this->sqlnum;
+            $v->id = $v->id - $this->sqlnum;
         }
         
         jsond(200,'',$list);
