@@ -26,7 +26,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
-                        {field: 'oauth_id', title: __('Oauth_id'), visible:false},
+                        {field: 'oauth_id', title: __('Oauth_id'), visible:false, operate:false},
                         {field: 'oauth_text', title: __('Oauth_text'), operate:false},
                         {field: 'image', title: __('Image'), operate:false, formatter: return_image},
                         {field: 'status', title: __('Status'), visible:false, searchList: {"0":__('Status 0'),"1":__('Status 1'),"2":__('Status 2')}},
