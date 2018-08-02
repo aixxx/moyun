@@ -166,7 +166,7 @@ class Api extends Frontend
 
         $id = Request::instance()->param("id",0,"intval");
         if(!$id) jsond(0,'params error');
-
+        $id = $id + $this->sqlnum;
         if($uid == $id) jsond(0, '不能给自己投票');
 
         $oauth = $this->getAdminModel("Oauth");
