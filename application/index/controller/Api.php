@@ -17,6 +17,8 @@ class Api extends Frontend
     protected $noNeedRight = '*';
     protected $layout = '';
 
+    public $sqlnum = 37;
+
     public function _initialize()
     {
         parent::_initialize();
@@ -40,6 +42,7 @@ class Api extends Frontend
         }
         foreach($data['list'] as $k=>$v){
             $data['list'][$k]['image'] = Config::get("upload.imgurl").$v['image'];
+            $data['list'][$k]['id'] =  $v['id'] - $this->sqlnum;
         }
 
         jsond(200,'',$data);
@@ -146,6 +149,7 @@ class Api extends Frontend
         $list['rank'] = $oauth->where(['vote'=>['>',$list['vote']]])->count() + 1;
         foreach($list->product_many as $k=>$v){
             $v->image = Config::get("upload.imgurl").$v->image;
+            $v->id = $v->id - $this->sqlnum;
         }
         
         jsond(200,'',$list);
