@@ -25,7 +25,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'id', title: __('Id'), sortable: true},
+                        {field: 'id', title: __('Id'), sortable: true,formatter: return_id},
                         {field: 'name', title: __('Name'), operate: 'LIKE %...%', placeholder: '模糊搜索，*表示任意字符'},
                         {field: 'vote', title: __('Vote'), operate: 'BETWEEN', sortable: true},
                         {field: 'platform', title: __('Platform'), visible:false, searchList: {"weibo":__('platform weibo'),"weixin":__('platform weixin'),"qq":__('platform qq'),"mobu":__('platform mobu')}},
@@ -56,3 +56,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
     };
     return Controller;
 });
+
+function return_id(val) {
+    return val - 37;
+}
