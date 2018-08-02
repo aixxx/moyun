@@ -26,7 +26,7 @@ class Index extends Frontend
         
         if(session("MOBOO_OAUTH_ID")) {
             $isUpload = action("Api/getIsUpload");
-            $params = ['id'=> session("MOBOO_OAUTH_ID"),'is_upload'=> $isUpload,'getbyid'=> $getbyid];
+            $params = ['id'=> session("MOBOO_OAUTH_ID") - $this->sqlnum,'is_upload'=> $isUpload,'getbyid'=> $getbyid];
             $this->redirect("/act/".session("MOBOO_ACT")."/?". http_build_query($params),302);
         }
         
@@ -80,7 +80,7 @@ class Index extends Frontend
             $isUpload = 1;
         }
         //记录成功，跳转活动首页
-        $params = ['id'=> session("MOBOO_OAUTH_ID"),'is_upload'=> $isUpload, 'getbyid'=> $getbyid];
+        $params = ['id'=> session("MOBOO_OAUTH_ID") - $this->sqlnum,'is_upload'=> $isUpload, 'getbyid'=> $getbyid];
         $this->redirect("/act/".session("MOBOO_ACT")."/?". http_build_query($params),302);
     }
 }

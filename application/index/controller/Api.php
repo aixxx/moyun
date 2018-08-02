@@ -17,7 +17,6 @@ class Api extends Frontend
     protected $noNeedRight = '*';
     protected $layout = '';
 
-    public $sqlnum = 37;
 
     public function _initialize()
     {

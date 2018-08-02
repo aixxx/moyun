@@ -15,6 +15,9 @@ class Frontend extends Controller
     public $browseType;
 
     public $activityHome;
+
+
+    public $sqlnum = 37;
     public function _initialize()
     {
         $this->browseType = getBrowseType();
