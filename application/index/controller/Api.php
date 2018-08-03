@@ -161,7 +161,7 @@ class Api extends Frontend
         if(date("Y-m-d") >= Env::get("oauth.over_time")) jsond(0, '活动结束');
 
         $uid = session("MOBOO_OAUTH_ID");
-        if(!$uid) jsond(0, 'login time out');
+        if(!$uid) jsond(0, '授权超时，请重新授权');
 
         $id = Request::instance()->param("id",0,"intval");
         if(!$id) jsond(0,'params error');
@@ -237,11 +237,11 @@ class Api extends Frontend
      **/
     public function upload(){
         if(date("Y-m-d") >= Env::get("oauth.over_time")) jsond(0, '活动结束');
-        //$base64 = Config::get("base64.content");
-        $base64 = Request::instance()->param("data","");
+        $base64 = Config::get("base64.content");
+        //$base64 = Request::instance()->param("data","");
         if(!$base64) jsond(0, 'params empty');
 
-        if(!$this->getIsUpload()) jsond(0, '您已经上传过作品');
+        //if(!$this->getIsUpload()) jsond(0, '您已经上传过作品');
 
         $upload = Config::get("upload");
 
@@ -322,7 +322,7 @@ class Api extends Frontend
     }
     
     public function getIsUpload(){
-        if(!session("MOBOO_OAUTH_ID")) jsond(0, 'login time out');
+        if(!session("MOBOO_OAUTH_ID")) jsond(0, '授权超时，请重新授权');
 
         $map = [
             'oauth_id' => session("MOBOO_OAUTH_ID"),
