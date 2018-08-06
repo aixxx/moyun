@@ -1,4 +1,4 @@
-完整包安装 cccccccccccccccccccccccccccc
+完整包安装 1111111111111
 前往官网下载页面(https://www.fastadmin.net/download.html)下载完整包解压到你的项目目录
 添加虚拟主机并绑定到项目中的public目录
 访问 http://www.yoursite.com/install.php 进行安装
